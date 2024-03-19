@@ -23,15 +23,6 @@ public class IssueController {
     @Autowired
     private IssueService service;
 
-
-
-    /*
-        GET - получение записей
-        POST - создание записей
-        PUT - изменение записей
-        DELETE - запрос на удаление ресурса
-     */
-
     @PostMapping
     public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest issueRequest) {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"

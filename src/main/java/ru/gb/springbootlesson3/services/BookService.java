@@ -2,6 +2,7 @@ package ru.gb.springbootlesson3.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.gb.springbootlesson3.controllers.BookRequest;
 import ru.gb.springbootlesson3.entity.Book;
 import ru.gb.springbootlesson3.repository.BookRepository;
 
@@ -20,7 +21,14 @@ public class BookService {
         return bookRepository.removeBookById(id);
     }
 
-    public void addBook(Book book) {
+    public Book addBook(Book book) {
+
         bookRepository.addNewBook(book);
+        return book;
+    }
+    public Book addNewBook(BookRequest request) {
+        Book book = new Book(request.getName());
+        bookRepository.addNewBook(book);
+        return book;
     }
 }
