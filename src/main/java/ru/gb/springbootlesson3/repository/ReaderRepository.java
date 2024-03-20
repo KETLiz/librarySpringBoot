@@ -30,8 +30,7 @@ public class ReaderRepository {
         list.removeIf(reader -> reader.getId() == id);
     }
 
-    public Reader createReader(Reader reader) {
+    public void createReader(Reader reader) {
         list.add(reader);
-        return reader;
     }
 }

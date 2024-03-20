@@ -31,20 +31,13 @@ public class BookRestController {
 //    }
 
     //метод добавления новой книги
-//    @PostMapping
-//    public ResponseEntity<Book> addBook(@RequestBody BookRequest bookRequest) {
-//        try {
-//            return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addNewBook(bookRequest));
-//        } catch (NoSuchElementException e){
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+    public ResponseEntity<Book> addBook(@RequestBody BookRequest bookRequest) {
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addBook(book));
+            return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addNewBook(bookRequest));
         } catch (NoSuchElementException e){
             return ResponseEntity.notFound().build();
         }
     }
+
 }

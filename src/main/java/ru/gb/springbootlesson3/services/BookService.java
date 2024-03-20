@@ -25,11 +25,6 @@ public class BookService {
         return bookRepository.removeBookById(id);
     }
 
-    public Book addBook(Book book) {
-
-        bookRepository.addNewBook(book);
-        return book;
-    }
     public Book addNewBook(BookRequest request) {
         Book book = new Book(request.getName());
         bookRepository.addNewBook(book);

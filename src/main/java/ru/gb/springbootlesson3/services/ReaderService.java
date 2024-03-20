@@ -2,6 +2,7 @@ package ru.gb.springbootlesson3.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.gb.springbootlesson3.controllers.restControllers.ReaderRequest;
 import ru.gb.springbootlesson3.entity.Reader;
 import ru.gb.springbootlesson3.repository.ReaderRepository;
 
@@ -24,8 +25,9 @@ public class ReaderService {
         repository.deleteReader(id);
     }
 
-    public Reader createReader(Reader reader) {
-        repository.createReader(reader);
-        return reader;
+    public Reader createReader(ReaderRequest request) {
+        Reader newReader = new Reader(request.getName());
+        repository.createReader(newReader);
+        return newReader;
     }
 }

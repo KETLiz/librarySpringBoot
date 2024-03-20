@@ -42,9 +42,9 @@ public class ReaderRestController {
 //        return new ResponseEntity<>(service.createReader(newReader), HttpStatus.CREATED);
 //    }
     @PostMapping
-    public ResponseEntity<Reader> createNewReader(@RequestBody Reader newReader) {
+    public ResponseEntity<Reader> createNewReader(@RequestBody ReaderRequest request) {
         try {
-            return ResponseEntity.ok().body(service.createReader(newReader));
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.createReader(request));
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
