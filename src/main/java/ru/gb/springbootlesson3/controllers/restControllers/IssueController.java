@@ -5,13 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.services.IssueService;
 
+import java.net.HttpURLConnection;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -24,14 +22,26 @@ public class IssueController {
     private IssueService service;
 
     @PostMapping
-    public ResponseEntity<Issue> issueBook(@RequestBody IssueRequest issueRequest) {
+    public int issueBook(@RequestBody IssueRequest issueRequest) {
         log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
                 , issueRequest.getReaderId(), issueRequest.getBookId());
 
         try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
+            if(service.createIssue(issueRequest) != null) {
+                return HttpURLConnection.HTTP_CREATED;
+            } else {
+                return HttpURLConnection.HTTP_CONFLICT;
+            }
+
+            //return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
         } catch (NoSuchElementException e){
-            return ResponseEntity.notFound().build();
+            return HttpURLConnection.HTTP_GATEWAY_TIMEOUT;
         }
+    }
+
+    @GetMapping
+    @RequestMapping("{id}")
+    public Issue getBookById(@PathVariable long id) {
+        return service.getById(id);
     }
 }

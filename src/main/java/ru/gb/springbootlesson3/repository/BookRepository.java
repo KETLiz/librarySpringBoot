@@ -24,14 +24,8 @@ public class BookRepository {
                 .orElse(null);
     }
 
-    public List<Book> removeBookById(long id) {
-        List<Book> newList = new ArrayList<>();
-        for(Book book : list) {
-            if(book.getId() != id) {
-                newList.add(book);
-            }
-        }
-        return newList;
+    public void removeBookById(long id) {
+        list.removeIf(book -> book.getId() == id);
     }
 
     public void addNewBook(Book book) {

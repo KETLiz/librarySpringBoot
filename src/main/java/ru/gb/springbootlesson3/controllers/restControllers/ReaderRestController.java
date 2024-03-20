@@ -3,6 +3,7 @@ package ru.gb.springbootlesson3.controllers.restControllers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.entity.Reader;
 import ru.gb.springbootlesson3.services.ReaderService;
 
@@ -32,15 +33,7 @@ public class ReaderRestController {
         service.deleteReader(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-//    @DeleteMapping("{id}")
-//    public void deleteReader(@PathVariable Long id) {
-//        service.deleteReader(id);
-//    }
 
-//    @PostMapping
-//    public ResponseEntity<Reader> createNewReader(@RequestBody Reader newReader) {
-//        return new ResponseEntity<>(service.createReader(newReader), HttpStatus.CREATED);
-//    }
     @PostMapping
     public ResponseEntity<Reader> createNewReader(@RequestBody ReaderRequest request) {
         try {
@@ -48,5 +41,10 @@ public class ReaderRestController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("{id}/issue")
+    public List<Issue> issuesByReaderId(@PathVariable long id) {
+
     }
 }

@@ -25,10 +25,11 @@ public class BookRestController {
     }
 
     //метод удаления книги
-//    @DeleteMapping("{id}")
-//    public List<Book> removeBook(long id) {
-//       return bookService.removeBook(id);
-//    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Book> removeBook(@PathVariable long id) {
+       bookService.removeBook(id);
+       return new ResponseEntity<>(HttpStatus.OK);
+    }
 
     //метод добавления новой книги
     @PostMapping

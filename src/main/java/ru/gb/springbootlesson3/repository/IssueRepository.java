@@ -19,4 +19,25 @@ public class IssueRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Issue getById(long id) {
+        return list.stream()
+                .filter(issue -> issue.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public boolean ifReaderTookBook(long readerId) {
+        for(Issue issue : list) {
+            if(issue.getIdReader() == readerId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Issue> takenBooksByRederId(long id) {
+
+    }
+
 }

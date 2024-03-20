@@ -29,8 +29,15 @@ public class IssueService {
             throw new NoSuchElementException("Не удалось найти читателя с id " + request.getReaderId());
         }
 
-        Issue issue = new Issue(request.getReaderId(), request.getBookId());
-        issueRepository.createIssue(issue);
-        return issue;
+        if(!issueRepository.ifReaderTookBook(request.getReaderId())) {
+            Issue issue = new Issue(request.getReaderId(), request.getBookId());
+            issueRepository.createIssue(issue);
+            return issue;
+        }
+        return null;
+    }
+
+    public Issue getById(long id) {
+        return issueRepository.getById(id);
     }
 }
