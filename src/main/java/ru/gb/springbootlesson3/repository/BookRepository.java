@@ -37,4 +37,8 @@ public class BookRepository {
     public void addNewBook(Book book) {
         list.add(book);
     }
+
+    public List<Book> allBooks() {
+        return list;
+    }
 }

@@ -1,7 +1,6 @@
 package ru.gb.springbootlesson3.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.entity.Reader;
 
 import java.util.ArrayList;
@@ -17,9 +16,22 @@ public class ReaderRepository {
         list.add(new Reader("Семен"));
     }
 
+    public List<Reader> getAllReaders() {
+        return list;
+    }
+
     public Reader findById(long id){
         return list.stream().filter(e -> e.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void deleteReader(Long id) {
+        list.removeIf(reader -> reader.getId() == id);
+    }
+
+    public Reader createReader(Reader reader) {
+        list.add(reader);
+        return reader;
     }
 }

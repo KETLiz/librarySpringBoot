@@ -1,4 +1,4 @@
-package ru.gb.springbootlesson3.controllers;
+package ru.gb.springbootlesson3.controllers.restControllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

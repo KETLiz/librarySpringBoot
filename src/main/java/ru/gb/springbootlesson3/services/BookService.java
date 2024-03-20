@@ -2,7 +2,7 @@ package ru.gb.springbootlesson3.services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.gb.springbootlesson3.controllers.BookRequest;
+import ru.gb.springbootlesson3.controllers.restControllers.BookRequest;
 import ru.gb.springbootlesson3.entity.Book;
 import ru.gb.springbootlesson3.repository.BookRepository;
 
@@ -12,6 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookService {
     private final BookRepository bookRepository;
+
+    public List<Book> allBooks() {
+        return bookRepository.allBooks();
+    }
 
     public Book findBookById(long id) {
         return bookRepository.findById(id);

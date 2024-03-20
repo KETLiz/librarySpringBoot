@@ -3,7 +3,7 @@ package ru.gb.springbootlesson3.services;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.gb.springbootlesson3.controllers.IssueRequest;
+import ru.gb.springbootlesson3.controllers.restControllers.IssueRequest;
 import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.repository.BookRepository;
 import ru.gb.springbootlesson3.repository.IssueRepository;
