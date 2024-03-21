@@ -3,7 +3,9 @@ package ru.gb.springbootlesson3.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.springbootlesson3.controllers.restControllers.ReaderRequest;
+import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.entity.Reader;
+import ru.gb.springbootlesson3.repository.IssueRepository;
 import ru.gb.springbootlesson3.repository.ReaderRepository;
 
 import java.util.List;
@@ -11,23 +13,29 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReaderService {
-    private final ReaderRepository repository;
+    private final ReaderRepository readerRepository;
+    private final IssueRepository issueRepository;
+
 
     public List<Reader> getAllReaders() {
-        return repository.getAllReaders();
+        return readerRepository.getAllReaders();
     }
 
     public Reader getReaderByid(long id) {
-        return repository.findById(id);
+        return readerRepository.findById(id);
     }
 
     public void deleteReader(Long id) {
-        repository.deleteReader(id);
+        readerRepository.deleteReader(id);
     }
 
     public Reader createReader(ReaderRequest request) {
         Reader newReader = new Reader(request.getName());
-        repository.createReader(newReader);
+        readerRepository.createReader(newReader);
         return newReader;
+    }
+
+    public List<Issue> getIssuesByReaderId(long readerId) {
+        return issueRepository.takenBooksByRederId(readerId);
     }
 }

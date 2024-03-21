@@ -44,7 +44,7 @@ public class ReaderRestController {
     }
 
     @GetMapping("{id}/issue")
-    public List<Issue> issuesByReaderId(@PathVariable long id) {
-
+    public List<Issue> issuesByReaderId(@PathVariable("id") long readerId) {
+        return service.getIssuesByReaderId(readerId);
     }
 }

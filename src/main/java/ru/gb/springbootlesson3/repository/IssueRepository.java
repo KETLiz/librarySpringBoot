@@ -36,8 +36,17 @@ public class IssueRepository {
         return false;
     }
 
-    public List<Issue> takenBooksByRederId(long id) {
-
+    public List<Issue> takenBooksByRederId(long readerId) {
+        List<Issue> issuesByReaderId = new ArrayList<>();
+        for(Issue issue : list) {
+            if(ifReaderTookBook(readerId)) {
+                issuesByReaderId.add(issue);
+            }
+        }
+        return issuesByReaderId;
     }
 
+    public List<Issue> getAllIssues() {
+        return list;
+    }
 }

@@ -1,6 +1,7 @@
 package ru.gb.springbootlesson3.entity;
 
 import lombok.Data;
+import ru.gb.springbootlesson3.repository.BookRepository;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +12,12 @@ public class Issue {
     private final long id;
     private final long idReader;
     private final long idBook;
-    private final LocalDateTime time;
+    private final LocalDateTime issueTime;
 
     public Issue(long idReader, long idBook){
         id = genId++;
         this.idBook = idBook;
         this.idReader = idReader;
-        time = LocalDateTime.now();
+        issueTime = LocalDateTime.now();
     }
 }

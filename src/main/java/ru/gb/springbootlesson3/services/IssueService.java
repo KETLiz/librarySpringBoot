@@ -9,6 +9,7 @@ import ru.gb.springbootlesson3.repository.BookRepository;
 import ru.gb.springbootlesson3.repository.IssueRepository;
 import ru.gb.springbootlesson3.repository.ReaderRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
@@ -39,5 +40,8 @@ public class IssueService {
 
     public Issue getById(long id) {
         return issueRepository.getById(id);
+    }
+    public List<Issue> getAllIssues() {
+        return issueRepository.getAllIssues();
     }
 }

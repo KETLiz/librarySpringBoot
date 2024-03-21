@@ -3,8 +3,6 @@ package ru.gb.springbootlesson3.controllers.restControllers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.services.IssueService;
@@ -16,7 +14,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("issue")
 @RequiredArgsConstructor
-public class IssueController {
+public class IssueRestController {
 
     @Autowired
     private IssueService service;
