@@ -35,11 +35,5 @@ public class BookRepository {
     public List<Book> allBooks() {
         return list;
     }
-    public List<String> getBookName() {
-        List<String> bookNames = new ArrayList<>();
-        for(Book book : list) {
-            bookNames.add(book.getName());
-        }
-        return bookNames;
-    }
+
 }

@@ -12,12 +12,18 @@ public class Issue {
     private final long id;
     private final long idReader;
     private final long idBook;
-    private final LocalDateTime issueTime;
+    private final LocalDateTime issuedAt;
+    private LocalDateTime returnedAt = null;
 
     public Issue(long idReader, long idBook){
         id = genId++;
         this.idBook = idBook;
         this.idReader = idReader;
-        issueTime = LocalDateTime.now();
+        issuedAt = LocalDateTime.now();
     }
+
+    public void setTimeReturn(LocalDateTime returnedAt) {
+        this.returnedAt = returnedAt;
+    }
+
 }

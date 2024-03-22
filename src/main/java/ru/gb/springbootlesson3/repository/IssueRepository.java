@@ -14,12 +14,6 @@ public class IssueRepository {
         list.add(issue);
     }
 
-    public Issue findById(long id){
-        return list.stream().filter(e -> e.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
     public Issue getById(long id) {
         return list.stream()
                 .filter(issue -> issue.getId() == id)
@@ -27,9 +21,9 @@ public class IssueRepository {
                 .orElse(null);
     }
 
-    public boolean ifReaderTookBook(long readerId) {
+    public boolean ifReaderTookBookAndDontReturn(long readerId) {
         for(Issue issue : list) {
-            if(issue.getIdReader() == readerId) {
+            if(issue.getIdReader() == readerId && issue.getReturnedAt() == null) {
                 return true;
             }
         }
@@ -39,7 +33,7 @@ public class IssueRepository {
     public List<Issue> takenBooksByRederId(long readerId) {
         List<Issue> issuesByReaderId = new ArrayList<>();
         for(Issue issue : list) {
-            if(ifReaderTookBook(readerId)) {
+            if(ifReaderTookBookAndDontReturn(readerId)) {
                 issuesByReaderId.add(issue);
             }
         }
@@ -48,5 +42,8 @@ public class IssueRepository {
 
     public List<Issue> getAllIssues() {
         return list;
+    }
+    public void deleteIssue(long issueId) {
+         list.removeIf(issue -> issue.getId() == issueId);
     }
 }

@@ -9,6 +9,7 @@ import ru.gb.springbootlesson3.repository.BookRepository;
 import ru.gb.springbootlesson3.repository.IssueRepository;
 import ru.gb.springbootlesson3.repository.ReaderRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,7 +31,7 @@ public class IssueService {
             throw new NoSuchElementException("Не удалось найти читателя с id " + request.getReaderId());
         }
 
-        if(!issueRepository.ifReaderTookBook(request.getReaderId())) {
+        if(!issueRepository.ifReaderTookBookAndDontReturn(request.getReaderId())) {
             Issue issue = new Issue(request.getReaderId(), request.getBookId());
             issueRepository.createIssue(issue);
             return issue;
@@ -43,5 +44,16 @@ public class IssueService {
     }
     public List<Issue> getAllIssues() {
         return issueRepository.getAllIssues();
+    }
+
+    public Issue updateIssue(long issueId) {
+        Issue searchIssue = getById(issueId);
+        LocalDateTime returnedAt = LocalDateTime.now();
+        searchIssue.setTimeReturn(returnedAt);
+        return searchIssue;
+    }
+
+    public void deleteIssue(long issueId) {
+        issueRepository.deleteIssue(issueId);
     }
 }
