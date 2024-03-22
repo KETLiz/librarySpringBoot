@@ -53,7 +53,7 @@ public class IssueService {
         return searchIssue;
     }
 
-    public void deleteIssue(long issueId) {
-        issueRepository.deleteIssue(issueId);
+    public Issue bookNameReaderHaveNow(long readerId) {
+        return issueRepository.bookNameReaderHaveNow(readerId);
     }
 }

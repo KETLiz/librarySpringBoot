@@ -3,6 +3,7 @@ package ru.gb.springbootlesson3.services;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.gb.springbootlesson3.controllers.restControllers.ReaderRequest;
+import ru.gb.springbootlesson3.entity.Book;
 import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.entity.Reader;
 import ru.gb.springbootlesson3.repository.IssueRepository;
@@ -15,6 +16,7 @@ import java.util.List;
 public class ReaderService {
     private final ReaderRepository readerRepository;
     private final IssueRepository issueRepository;
+    private final ReaderRepository bookRepository;
 
 
     public List<Reader> getAllReaders() {
@@ -37,5 +39,9 @@ public class ReaderService {
 
     public List<Issue> getIssuesByReaderId(long readerId) {
         return issueRepository.takenBooksByRederId(readerId);
+    }
+
+    public String getReaderNameById(long readerId) {
+        return readerRepository.findById(readerId).getName();
     }
 }

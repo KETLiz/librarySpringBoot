@@ -30,4 +30,8 @@ public class BookService {
         bookRepository.addNewBook(book);
         return book;
     }
+
+    public String getBookNameById(long bookId) {
+        return bookRepository.findById(bookId).getName();
+    }
 }

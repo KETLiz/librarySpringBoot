@@ -44,11 +44,12 @@ public class IssueRestController {
         try {
             if(service.createIssue(issueRequest) != null) {
                 return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
+            } else {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
         } catch (NoSuchElementException e){
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
         }
-        return null;
     }
 
     @GetMapping

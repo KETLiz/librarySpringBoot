@@ -33,17 +33,23 @@ public class IssueRepository {
     public List<Issue> takenBooksByRederId(long readerId) {
         List<Issue> issuesByReaderId = new ArrayList<>();
         for(Issue issue : list) {
-            if(ifReaderTookBookAndDontReturn(readerId)) {
+            if(issue.getIdReader() == readerId) {
                 issuesByReaderId.add(issue);
             }
         }
         return issuesByReaderId;
     }
 
+    public Issue bookNameReaderHaveNow(long readerId) {
+        for(Issue issue : list) {
+            if(issue.getIdReader() == readerId && issue.getReturnedAt() == null) {
+                return issue;
+            }
+        }
+        return null;
+    }
     public List<Issue> getAllIssues() {
         return list;
     }
-    public void deleteIssue(long issueId) {
-         list.removeIf(issue -> issue.getId() == issueId);
-    }
+
 }
