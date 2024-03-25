@@ -10,16 +10,43 @@ import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.services.IssueService;
 
 import java.net.HttpURLConnection;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Slf4j
 @RestController
 @RequestMapping("issue")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class IssueRestController {
 
     @Autowired
     private IssueService service;
+
+    public IssueRestController(IssueService service) {
+        this.service = service;
+    }
+
+    @GetMapping
+    public List<Issue> getAllIssues() {
+        return service.getAllIssues();
+    }
+    @PostMapping
+    public ResponseEntity<Issue> createNewIssue(@RequestBody IssueRequest request) {
+        if(service.createNewIssue(request) != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
+
+    @PutMapping("{issueId}")
+    public ResponseEntity<Issue> returnBook(@PathVariable long issueId) {
+        try {
+            service.returnBook(issueId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch(Exception e) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+    }
 
 //    @PostMapping
 //    public int issueBook(@RequestBody IssueRequest issueRequest) {
@@ -39,31 +66,31 @@ public class IssueRestController {
 //        }
 //    }
 
-    @PostMapping
-    public ResponseEntity<Issue> issueBookResponse(@RequestBody IssueRequest issueRequest) {
-        try {
-            if(service.createIssue(issueRequest) != null) {
-                return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
-            } else {
-                return new ResponseEntity<>(HttpStatus.CONFLICT);
-            }
-        } catch (NoSuchElementException e){
-            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
-        }
-    }
-
-    @GetMapping
-    @RequestMapping("{id}")
-    public Issue getBookById(@PathVariable long id) {
-        return service.getById(id);
-    }
-
-    @PutMapping("{issueId}")
-    public ResponseEntity<Issue> updateIssue(@PathVariable long issueId) {
-        Issue searchIssue = service.updateIssue(issueId);
-        //service.updateIssue(issueId);
-        //return new ResponseEntity<>(HttpStatus.OK);
-        return ResponseEntity.status(HttpStatus.OK).body(searchIssue);
-    }
+//    @PostMapping
+//    public ResponseEntity<Issue> issueBookResponse(@RequestBody IssueRequest issueRequest) {
+//        try {
+//            if(service.createIssue(issueRequest) != null) {
+//                return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
+//            } else {
+//                return new ResponseEntity<>(HttpStatus.CONFLICT);
+//            }
+//        } catch (NoSuchElementException e){
+//            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
+//        }
+//    }
+//
+//    @GetMapping
+//    @RequestMapping("{id}")
+//    public Issue getBookById(@PathVariable long id) {
+//        return service.getById(id);
+//    }
+//
+//    @PutMapping("{issueId}")
+//    public ResponseEntity<Issue> updateIssue(@PathVariable long issueId) {
+//        Issue searchIssue = service.updateIssue(issueId);
+//        //service.updateIssue(issueId);
+//        //return new ResponseEntity<>(HttpStatus.OK);
+//        return ResponseEntity.status(HttpStatus.OK).body(searchIssue);
+//    }
 
 }

@@ -1,6 +1,8 @@
 package ru.gb.springbootlesson3.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import ru.gb.springbootlesson3.controllers.restControllers.BookRequest;
 import ru.gb.springbootlesson3.entity.Book;
@@ -13,25 +15,50 @@ import java.util.List;
 public class BookService {
     private final BookRepository bookRepository;
 
-    public List<Book> allBooks() {
-        return bookRepository.allBooks();
+    @EventListener(ContextRefreshedEvent.class)
+    public void createBookDatabase() {
+        bookRepository.save(new Book("Война и мир"));
+        bookRepository.save(new Book("Мастер и Маргарита"));
+        bookRepository.save(new Book("Приключения Буратино"));
+    }
+
+    public List<Book> getAllBooks() {
+        return bookRepository.findAll();
     }
 
     public Book findBookById(long id) {
-        return bookRepository.findById(id);
+        return bookRepository.findById(id).orElseThrow();
     }
 
-    public void removeBook(long id) {
-        bookRepository.removeBookById(id);
+    public void removeBookById(long id) {
+        bookRepository.deleteById(id);
     }
 
     public Book addNewBook(BookRequest request) {
-        Book book = new Book(request.getName());
-        bookRepository.addNewBook(book);
-        return book;
+        Book newBook = new Book(request.getName());
+        return bookRepository.save(newBook);
     }
 
+
+//    public List<Book> allBooks() {
+//        return bookRepository.allBooks();
+//    }
+//
+//    public Book findBookById(long id) {
+//        return bookRepository.findById(id);
+//    }
+//
+//    public void removeBook(long id) {
+//        bookRepository.removeBookById(id);
+//    }
+//
+//    public Book addNewBook(BookRequest request) {
+//        Book book = new Book(request.getName());
+//        bookRepository.addNewBook(book);
+//        return book;
+//    }
+//
     public String getBookNameById(long bookId) {
-        return bookRepository.findById(bookId).getName();
+        return bookRepository.findById(bookId).orElseThrow().getName();
     }
 }

@@ -1,16 +1,24 @@
 package ru.gb.springbootlesson3.entity;
 
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Data
+@Table
+
 public class Book {
-    private static long genId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column
+    private String name;
 
-    private final long id;
-    private final String name;
+    public Book() {
 
+    }
     public Book(String name) {
-        id = genId++;
         this.name = name;
     }
 
