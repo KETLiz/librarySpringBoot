@@ -19,12 +19,6 @@ public class BookController {
     }
 
     @GetMapping
-    public String getAllBooks(Model model) {
-        List<Book> booksList = service.getAllBooks();
-        model.addAttribute("list", booksList);
-        return "books";
-    }
-    @GetMapping
     public String showAllBooks(Model model) {
         List<Book> list = service.getAllBooks();
         model.addAttribute("list", list);
