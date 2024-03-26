@@ -10,6 +10,7 @@ import ru.gb.springbootlesson3.entity.Issue;
 import ru.gb.springbootlesson3.services.IssueService;
 
 import java.net.HttpURLConnection;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -30,67 +31,31 @@ public class IssueRestController {
     public List<Issue> getAllIssues() {
         return service.getAllIssues();
     }
+
+    @GetMapping("{id}")
+    public Issue getIssueById(@PathVariable long id) {
+        return service.getIssueById(id);
+    }
+
     @PostMapping
     public ResponseEntity<Issue> createNewIssue(@RequestBody IssueRequest request) {
-        if(service.createNewIssue(request) != null) {
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+        try {
+            if(service.createNewIssue(request) != null) {
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(HttpStatus.CONFLICT);
+            }
+        } catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
         }
-        return ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+
 
     @PutMapping("{issueId}")
-    public ResponseEntity<Issue> returnBook(@PathVariable long issueId) {
-        try {
-            service.returnBook(issueId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch(Exception e) {
-            return new ResponseEntity<>(HttpStatus.CONFLICT);
-        }
+    public Issue returnBook(@PathVariable long issueId) {
+        Issue searchIssue = service.returnBook(issueId);
+
+
+        return searchIssue;
     }
-
-//    @PostMapping
-//    public int issueBook(@RequestBody IssueRequest issueRequest) {
-//        log.info("Поступил запрос на выдачу: readerId={}, bookId={}"
-//                , issueRequest.getReaderId(), issueRequest.getBookId());
-//
-//        try {
-//            if(service.createIssue(issueRequest) != null) {
-//                return HttpURLConnection.HTTP_CREATED;
-//            } else {
-//                return HttpURLConnection.HTTP_CONFLICT;
-//            }
-//
-//            //return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
-//        } catch (NoSuchElementException e){
-//            return HttpURLConnection.HTTP_GATEWAY_TIMEOUT;
-//        }
-//    }
-
-//    @PostMapping
-//    public ResponseEntity<Issue> issueBookResponse(@RequestBody IssueRequest issueRequest) {
-//        try {
-//            if(service.createIssue(issueRequest) != null) {
-//                return ResponseEntity.status(HttpStatus.CREATED).body(service.createIssue(issueRequest));
-//            } else {
-//                return new ResponseEntity<>(HttpStatus.CONFLICT);
-//            }
-//        } catch (NoSuchElementException e){
-//            return new ResponseEntity<>(HttpStatus.GATEWAY_TIMEOUT);
-//        }
-//    }
-//
-//    @GetMapping
-//    @RequestMapping("{id}")
-//    public Issue getBookById(@PathVariable long id) {
-//        return service.getById(id);
-//    }
-//
-//    @PutMapping("{issueId}")
-//    public ResponseEntity<Issue> updateIssue(@PathVariable long issueId) {
-//        Issue searchIssue = service.updateIssue(issueId);
-//        //service.updateIssue(issueId);
-//        //return new ResponseEntity<>(HttpStatus.OK);
-//        return ResponseEntity.status(HttpStatus.OK).body(searchIssue);
-//    }
-
 }

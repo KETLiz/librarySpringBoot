@@ -49,28 +49,6 @@ public class ReaderService {
         return readerRepository.save(newReader);
     }
 
-//    public List<Reader> getAllReaders() {
-//        return readerRepository.getAllReaders();
-//    }
-//
-//    public Reader getReaderByid(long id) {
-//        return readerRepository.findById(id);
-//    }
-//
-//    public void deleteReader(Long id) {
-//        readerRepository.deleteReader(id);
-//    }
-//
-//    public Reader createReader(ReaderRequest request) {
-//        Reader newReader = new Reader(request.getName());
-//        readerRepository.createReader(newReader);
-//        return newReader;
-//    }
-//
-//    public List<Issue> getIssuesByReaderId(long readerId) {
-//        return issueRepository.takenBooksByRederId(readerId);
-//    }
-//
     public String getReaderNameById(long readerId) {
         return readerRepository.findById(readerId).orElseThrow().getName();
     }

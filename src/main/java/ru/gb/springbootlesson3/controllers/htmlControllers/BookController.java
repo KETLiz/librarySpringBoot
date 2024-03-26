@@ -24,10 +24,10 @@ public class BookController {
         model.addAttribute("list", booksList);
         return "books";
     }
-//    @GetMapping
-//    public String showAllBooks(Model model) {
-//        List<Book> list = service.allBooks();
-//        model.addAttribute("list", list);
-//        return "books";
-//    }
+    @GetMapping
+    public String showAllBooks(Model model) {
+        List<Book> list = service.getAllBooks();
+        model.addAttribute("list", list);
+        return "books";
+    }
 }

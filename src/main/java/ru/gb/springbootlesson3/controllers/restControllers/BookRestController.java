@@ -43,27 +43,4 @@ public class BookRestController {
             return ResponseEntity.notFound().build();
         }
     }
-    //метод получения описания книги
-//    @GetMapping("{id}")
-//    public Book getBookById(@PathVariable long id) {
-//        return bookService.findBookById(id);
-//    }
-//
-//    //метод удаления книги
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<Book> removeBook(@PathVariable long id) {
-//       bookService.removeBook(id);
-//       return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//    //метод добавления новой книги
-//    @PostMapping
-//    public ResponseEntity<Book> addBook(@RequestBody BookRequest bookRequest) {
-//        try {
-//            return ResponseEntity.status(HttpStatus.CREATED).body(bookService.addNewBook(bookRequest));
-//        } catch (NoSuchElementException e){
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
 }

@@ -34,15 +34,19 @@ public class IssueService {
         return issueRepository.findAll();
     }
 
+    public Issue getIssueById(long id) {
+        return issueRepository.findById(id).orElseThrow();
+    }
+
     public Issue createNewIssue(IssueRequest request) {
-        if(readerHaveBooksLessThanTwo(request)) {
-            Issue newIssue = new Issue(request.getReaderId(), request.getBookId());
-            return issueRepository.save(newIssue);
+        if(readerHaveBooksLessThanThree(request)) {
+            //Issue newIssue = new Issue(request.getReaderId(), request.getBookId());
+            return issueRepository.save(new Issue(request.getReaderId(), request.getBookId()));
         }
         return null;
     }
 
-    public boolean readerHaveBooksLessThanTwo(IssueRequest request) {
+    public boolean readerHaveBooksLessThanThree(IssueRequest request) {
         long readerIdFromRequest = request.getReaderId();
         List<Issue> issues = getAllIssues();
         List<Issue> issuesByReaderFromRequest = new ArrayList<>();
@@ -51,50 +55,25 @@ public class IssueService {
                 issuesByReaderFromRequest.add(i);
             }
         }
-        return issuesByReaderFromRequest.size() < 2;
+        return issuesByReaderFromRequest.size() < 3;
     }
 
-    public void returnBook(long issueId) {
+    public List<Issue> allIssuesByReaderIdBookOnHands(long readerId) {
+        List<Issue> allIssues = getAllIssues();
+        List<Issue> issuesByReaderId = new ArrayList<>();
+        for(Issue i : allIssues) {
+            if(i.getIdReader() == readerId && i.getReturnedAt() == null) {
+                issuesByReaderId.add(i);
+            }
+        }
+        return issuesByReaderId;
+    }
+
+    public Issue returnBook(long issueId) {
         Issue searchIssue = issueRepository.findById(issueId).orElseThrow();
         LocalDateTime returnedAt = LocalDateTime.now();
         searchIssue.setTimeReturn(returnedAt);
-//        long searchBookId = searchIssue.getIdBook();
-//        Book searchBook = bookRepository.findById(searchBookId).orElseThrow();
-//        long searchReaderId = searchIssue.getIdReader();
-//        Reader searchReader =
+        return issueRepository.save(searchIssue);
     }
-//    public Issue createIssue(IssueRequest request){
-//        if (bookRepository.findById(request.getBookId()) == null){
-//            log.info("Не удалось найти книгу с id " + request.getBookId());
-//            throw new NoSuchElementException("Не удалось найти книгу с id " + request.getBookId());
-//        }
-//        if (readerRepository.findById(request.getReaderId()) == null){
-//            log.info("Не удалось найти читателя с id " + request.getReaderId());
-//            throw new NoSuchElementException("Не удалось найти читателя с id " + request.getReaderId());
-//        }
-//        if(!issueRepository.ifReaderTookBookAndDontReturn(request.getReaderId())) {
-//            Issue issue = new Issue(request.getReaderId(), request.getBookId());
-//            issueRepository.createIssue(issue);
-//            return issue;
-//        }
-//        return null;
-//    }
-//
-//    public Issue getById(long id) {
-//        return issueRepository.getById(id);
-//    }
-//    public List<Issue> getAllIssues() {
-//        return issueRepository.getAllIssues();
-//    }
-//
-//    public Issue updateIssue(long issueId) {
-//        Issue searchIssue = getById(issueId);
-//        LocalDateTime returnedAt = LocalDateTime.now();
-//        searchIssue.setTimeReturn(returnedAt);
-//        return searchIssue;
-//    }
-//
-//    public Issue bookNameReaderHaveNow(long readerId) {
-//        return issueRepository.bookNameReaderHaveNow(readerId);
-//    }
+
 }

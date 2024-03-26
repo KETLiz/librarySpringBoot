@@ -21,12 +21,13 @@ public class Issue {
     @Column
     private LocalDateTime issuedAt;
     @Column
-    private LocalDateTime returnedAt = null;
+    private LocalDateTime returnedAt;
 
     public Issue(long idReader, long idBook){
         this.idBook = idBook;
         this.idReader = idReader;
         issuedAt = LocalDateTime.now();
+        returnedAt = null;
     }
 
     public void setTimeReturn(LocalDateTime returnedAt) {
